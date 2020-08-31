@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Ya Blog{% endblock %}
+
+{% block content %}
+<h1>YA Blog</h1>
+{% if posts %}
+  {% for post in posts %}
+    <h2>
+      <a href="{{ post.get_absolute_url }}">
+        {{ post.title }}
+      </a>
+    </h2>
+    <p class="date">
+      Published {{ post.publish }} by {{ post.author }}
+    </p>
+    {{ post.body|truncatewords:30|linebreaks }}
+  {% endfor %}
+
+  <!-- with pagination -->
+  {% include "pagination.html" with page=page_obj %}
+{% else %}
+ <div class="alert alert-info" role="alert">
+   There are no blog entries.
+ </div>
+{% endif %}
+
+<p>
+  <a href="{% url 'blog:post_create' %}" class="btn btn-sm btn-primary">Add a blog entry</a> &nbsp;
+</p>
+
+{% endblock %}
