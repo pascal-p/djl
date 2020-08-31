@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'blog.apps.BlogConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+## Custom Additions
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pascal@blog.org'      # fake
+EMAIL_HOST_PASSWORD = 'Blah blah bla...' # fake
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  ## Do NOT send any email
