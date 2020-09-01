@@ -5,15 +5,15 @@ from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 
-from .models import Post
-from .forms import EmailPostForm
+from .models import Post, Comment
+from .forms import EmailPostForm, CommentForm
 
 
 ## CBV
 class PostListView(ListView):
     queryset = Post.objects.all() # queryset = Post.published.all()
     context_object_name = 'posts'
-    paginate_by = 3
+    paginate_by = 5
     template_name = 'blog/post/list.html'
 
 class PostDetailView(DetailView):
@@ -21,14 +21,37 @@ class PostDetailView(DetailView):
     template_name = 'blog/post/detail.html'
 
     def get(self, request, year, month, day, post):
-        post_obj = get_object_or_404(Post, slug=post,
-                                     # status='published',
-                                     publish__year=year,
-                                     publish__month=month,
-                                     publish__day=day)
-        # context = { 'ad' : ad_obj, 'comments': comments, 'comment_form': comment_form }
-        context = { 'post': post_obj }
-        return render(request, self.template_name, context)
+        post, comments = self._get_qs_hlpr(request, year, month, day, post)
+        comment_form = CommentForm()                       ## Assume a get request, send inital empty form to fill
+
+        context = {'post': post, 'comments': comments, 'new_comment': None,
+                   'comment_form': comment_form}
+        return render(request, 'blog/post/detail.html', context)
+
+    def post(self, request, year, month, day, post):
+        post, comments = self._get_qs_hlpr(request, year, month, day, post)
+        new_comment = None
+        if request.method == 'POST':                           ## A comment was posted
+            comment_form = CommentForm(data=request.POST)
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)  ## Create Comment object but don't save to database yet
+                new_comment.post = post                        ## Assign the current post to the comment
+                new_comment.save()                             ## Save the comment to the database
+
+        context = {'post': post, 'comments': comments, 'new_comment': new_comment,
+                   'comment_form': comment_form}
+        return render(request, 'blog/post/detail.html', context)
+
+
+    def _get_qs_hlpr(self, request, year, month, day, post):
+        post = get_object_or_404(Post, slug=post,
+                                 status='published',
+                                 publish__year=year,
+                                 publish__month=month, publish__day=day)
+
+        # List of active comments for this post
+        comments = post.comments.filter(active=True)
+        return (post, comments)
 
 
 ## FBV

@@ -15,8 +15,9 @@
    <form method="post">
       {{ form|crispy }}
      {% csrf_token %}
-     <!-- <input type="submit" value="Send e-mail"> -->
-     <button type="submit" class="btn btn-sm btn-primary" value="Send e-mail">Send e-mail</button>
+      <p>
+        <button type="submit" class="btn btn-sm btn-primary" value="Send e-mail">Send e-mail</button>
+      </p>
    </form>
 {% endif %}
 {% endblock %}
