@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage,\
+                                  PageNotAnInteger
 
 # Create your views here.
 from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
+from taggit.models import Tag
 
 from .models import Post, Comment
 from .forms import EmailPostForm, CommentForm
@@ -11,10 +14,33 @@ from .forms import EmailPostForm, CommentForm
 
 ## CBV
 class PostListView(ListView):
-    queryset = Post.objects.all() # queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 5
+    # queryset = Post.published.all()
+    # context_object_name = 'posts'
+    # paginate_by = 5
     template_name = 'blog/post/list.html'
+
+    def get(self, request, tag_slug=None):
+        queryset = Post.published.all()
+        tag = None
+
+        if tag_slug:
+            tag = get_object_or_404(Tag, slug=tag_slug)
+            queryset = queryset.filter(tags__in=[tag])
+
+        paginator = Paginator(queryset, 5)               ## 5 posts in each page
+        page = request.GET.get('page')
+        try:
+            posts = paginator.page(page)
+
+        except PageNotAnInteger:
+            posts = paginator.page(1)                    ## If page is not an integer deliver the first page
+
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)  ## If page is out of range deliver last page of results
+
+        return render(request, 'blog/post/list.html',
+                      {'page': page, 'posts': posts, 'tag': tag})
+
 
 class PostDetailView(DetailView):
     model = Post

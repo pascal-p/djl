@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'blog.apps.BlogConfig',
     'crispy_forms',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +134,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-## Custom Additions
+## Custom Additions - Non Production settings
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'pascal@blog.org'      # fake
