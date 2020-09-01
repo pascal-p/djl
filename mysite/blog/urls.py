@@ -2,6 +2,8 @@ from django.urls import path
 
 from . import views
 from django.views.generic import TemplateView
+from .feeds import LatestPostsFeed
+
 
 app_name = 'blog'
 urlpatterns = [
@@ -20,4 +22,7 @@ urlpatterns = [
 
     # sharing post via email functionality using FBV
     path('<int:post_id>/share/', views.post_share, name='post_share'),
+
+    # Feeds
+    path('feed/', LatestPostsFeed(), name='post_feed'),
 ]
