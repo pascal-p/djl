@@ -19,7 +19,7 @@
       <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
     </p>
    {% empty %}
-    <p>There are no similar posts yet.</p>
+    <div class="alert alert-info" role="alert"><p>There are no similar posts yet.</p></div>
    {% endfor %}
 
 
@@ -35,7 +35,7 @@
     {{ comment.body|linebreaks }}
   </div>
 {% empty %}
-  <p>There are no comments yet.</p>
+  <div class="alert alert-info" role="alert"><p>There are no comments yet.</p></div>
 {% endfor %}
 
 {% if new_comment %}
