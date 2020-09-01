@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
+    # search with PostgreSQL
+    'django.contrib.postgres',
+    
     'blog.apps.BlogConfig',
     'crispy_forms',
     'taggit',
