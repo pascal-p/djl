@@ -32,7 +32,7 @@ class Post(models.Model):
     objects = models.Manager()     ## The default manager.
     published = PublishedManager() ## Our custom manager.
     #
-    tags = TaggableManager()       ## will allow you to CRD tags from Post instance    
+    tags = TaggableManager()       ## will allow you to CRD tags from Post instance
 
     class Meta:
         ordering = ('-publish',)

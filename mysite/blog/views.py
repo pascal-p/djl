@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage,\
-                                  PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
+from django.db.models import Count
 from taggit.models import Tag
+
 
 from .models import Post, Comment
 from .forms import EmailPostForm, CommentForm
@@ -50,8 +51,15 @@ class PostDetailView(DetailView):
         post, comments = self._get_qs_hlpr(request, year, month, day, post)
         comment_form = CommentForm()                       ## Assume a get request, send inital empty form to fill
 
+        # similar posts by tags - limited to 4
+        post_tags_ids = post.tags.values_list('id', flat=True)
+        similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)\
+                                                                     .annotate(same_tags=Count('tags'))\
+                                                                     .order_by('-same_tags','-publish')[:4]
+
         context = {'post': post, 'comments': comments, 'new_comment': None,
-                   'comment_form': comment_form}
+                   'comment_form': comment_form,
+                   'similar_posts': similar_posts}
         return render(request, 'blog/post/detail.html', context)
 
     def post(self, request, year, month, day, post):
