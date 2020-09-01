@@ -1,7 +1,10 @@
 asgiref==3.2.10
 certifi==2020.6.20
+coverage==5.2.1
 dill==0.3.2
 Django==3.1
+django-crispy-forms==1.9.2
+django-taggit==1.2.0
 future==0.18.2
 googleapis-common-protos==1.52.0
 promise==2.3
