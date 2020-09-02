@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
@@ -14,10 +17,7 @@ from .forms import EmailPostForm, CommentForm, SearchForm
 
 
 ## CBV
-class PostListView(ListView):
-    # queryset = Post.published.all()
-    # context_object_name = 'posts'
-    # paginate_by = 3
+class PostListView(LoginRequiredMixin, ListView):
     template_name = 'blog/post/list.html'
 
     def get(self, request, tag_slug=None):
@@ -43,7 +43,7 @@ class PostListView(ListView):
                       {'page': page, 'posts': posts, 'tag': tag})
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'blog/post/detail.html'
 
@@ -89,6 +89,7 @@ class PostDetailView(DetailView):
 
 
 ## FBV
+@login_required
 def post_share(request, post_id):
     post = get_object_or_404(Post, id=post_id, status='published')
     sent = False
@@ -105,6 +106,7 @@ def post_share(request, post_id):
     return render(request, 'blog/post/share.html', {'post': post, 'form': form,
                                                     'sent': sent})
 
+@login_required
 def post_search(request):
     form = SearchForm()
     query = None

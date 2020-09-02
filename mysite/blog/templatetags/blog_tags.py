@@ -1,6 +1,7 @@
 from django.utils.safestring import mark_safe
 from django import template
 from django.db.models import Count
+from hashlib import md5
 from ..models import Post
 
 import markdown
@@ -25,3 +26,12 @@ def get_most_commented_posts(count=5):
 @register.filter(name='markdown')
 def markdown_format(text):
     return mark_safe(markdown.markdown(text))
+
+# From DJ4E
+@register.filter(name='gravatar')
+def gravatar(user, size=35):
+    email = str(user.email.strip().lower()).encode('utf-8')
+    email_hash = md5(email).hexdigest()
+    url = "//www.gravatar.com/avatar/{0}?s={1}&d=identicon&r=PG"
+    return url.format(email_hash, size)
+

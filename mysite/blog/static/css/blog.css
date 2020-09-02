@@ -24,12 +24,16 @@ h2 {
     float:left;
     width:70%;
     padding:0 0 0 30px;
+    border-top:25px;
 }
 
 #sidebar {
     float:right;
     width:25%;
+
+    border-top:25px;
     padding:10px;
+
     background:#efefef;
     height:100%;
 }
@@ -39,12 +43,6 @@ p.date {
     font-family: georgia, serif;
     font-size: 12px;
     font-style: italic;
-}
-
-/* pagination */
-.pagination {
-    margin:40px 0;
-    font-weight:bold;
 }
 
 /* forms */

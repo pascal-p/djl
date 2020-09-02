@@ -1,14 +1,18 @@
 from django.urls import path
+from django.conf import settings
+from django.views.generic import TemplateView
+# from django.contrib.auth import views as auth_views
 
 from . import views
-from django.views.generic import TemplateView
 from .feeds import LatestPostsFeed
 
 
 app_name = 'blog'
 urlpatterns = [
-    # post views
+    # path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 
+    ## post views
     # R
     path('', views.PostListView.as_view(), name='post_list'),
     path('tag/<slug:tag_slug>/', views.PostListView.as_view(), name='post_list_by_tag'),
