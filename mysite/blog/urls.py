@@ -20,9 +20,9 @@ urlpatterns = [
     path('<int:year>/<int:month>/<int:day>/<slug:post>/', views.PostDetailView.as_view(), name='post_detail'),
 
     # CUD
-    # path('create/', views.PostCreate.as_view(), name='post_create'),
-    # path('<int:pk>/update/', views.PostUpdate.as_view(), name='post_update'),
-    # path('<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete'),
+    path('create/', views.PostCreate.as_view(), name='post_create'),
+    path('<int:pk>/update/', views.PostUpdate.as_view(), name='post_update'),
+    path('<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete'),
 
     # sharing post via email functionality using FBV
     path('<int:post_id>/share/', views.post_share, name='post_share'),
