@@ -5,7 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from django.views.generic import ListView, DetailView
+# from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from blog.author import AuthorListView, AuthorDetailView, AuthorCreateView, AuthorUpdateView, AuthorDeleteView
+
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -17,7 +19,7 @@ from .forms import EmailPostForm, CommentForm, SearchForm
 
 
 ## CBV
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(AuthorListView):
     template_name = 'blog/post/list.html'
 
     def get(self, request, tag_slug=None):
@@ -43,7 +45,7 @@ class PostListView(LoginRequiredMixin, ListView):
                       {'page': page, 'posts': posts, 'tag': tag})
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(AuthorDetailView):
     model = Post
     template_name = 'blog/post/detail.html'
 
@@ -87,6 +89,24 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         comments = post.comments.filter(active=True)
         return (post, comments)
 
+
+class PostCreate(AuthorCreateView):
+    model = Post
+    template_name = 'blog/post/form.html'
+    fields = ['title', 'slug', 'body', 'status', 'publish', 'tags']
+    success_url = reverse_lazy('blog:post_list')
+
+class PostUpdate(AuthorUpdateView):
+    model = Post
+    template_name = 'blog/post/form.html'
+    fields = ['title', 'slug', 'body', 'status', 'publish', 'tags']
+    success_url = reverse_lazy('blog:post_list')
+
+class PostDelete(AuthorDeleteView):
+    model = Post
+    template_name = 'blog/post/confirm_delete.html'
+    fields = ['title', 'slug', 'body', 'status', 'publish'], 'tags'
+    success_url = reverse_lazy('blog:post_list')
 
 ## FBV
 @login_required

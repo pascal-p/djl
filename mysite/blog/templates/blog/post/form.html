@@ -1,0 +1,13 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit"  class="btn btn-secondary" onclick="window.location='{% url 'blog:post_list' %}' ; return false;">Cancel</button>
+  </div>
+</form>
+{% endblock %}

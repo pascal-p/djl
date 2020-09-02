@@ -4,10 +4,12 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 }
 
+/*
 a {
     color:#00abff;
     text-decoration:none;
 }
+*/
 
 h1 {
     font-weight:normal;
@@ -23,16 +25,14 @@ h2 {
 #content {
     float:left;
     width:70%;
-    padding:0 0 0 30px;
-    border-top:25px;
+    margin: 10px 0 0 30px;
 }
 
 #sidebar {
     float:right;
     width:25%;
 
-    border-top:25px;
-    padding:10px;
+    margin:10px 0 0 10px;
 
     background:#efefef;
     height:100%;
@@ -41,7 +41,7 @@ h2 {
 p.date {
     color:#ccc;
     font-family: georgia, serif;
-    font-size: 12px;
+    font-size: x-small;
     font-style: italic;
 }
 

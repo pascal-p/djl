@@ -22,7 +22,7 @@
           <li class="nav-item">
             <form class="form-inline" method="get">
               <input type="text" name="query" class="textinput textInput form-control" required="" id="id_query">
-              <button type="submit" class="btn btn-sm btn-primary">Search</button>
+              <button type="submit" class="btn btn-primary">Search</button>
             </form>
           </li>
           -->
@@ -31,8 +31,7 @@
           </li>
 
           <li>
-            <!-- <a href="{ % url 'blog:post_create' % }">Create a blog entry</a> -->
-            <a href="#Placeholder">Add blog entry</a>
+            <a href="{% url 'blog:post_create' %}">Add blog entry</a>
           </li>
 
           <!--
