@@ -1,8 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
-from django.views.generic import ListView, DetailView
+# from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from blog.author import AuthorListView, AuthorDetailView, AuthorCreateView, AuthorUpdateView, AuthorDeleteView
+
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -14,10 +19,7 @@ from .forms import EmailPostForm, CommentForm, SearchForm
 
 
 ## CBV
-class PostListView(ListView):
-    # queryset = Post.published.all()
-    # context_object_name = 'posts'
-    # paginate_by = 3
+class PostListView(AuthorListView):
     template_name = 'blog/post/list.html'
 
     def get(self, request, tag_slug=None):
@@ -43,7 +45,7 @@ class PostListView(ListView):
                       {'page': page, 'posts': posts, 'tag': tag})
 
 
-class PostDetailView(DetailView):
+class PostDetailView(AuthorDetailView):
     model = Post
     template_name = 'blog/post/detail.html'
 
@@ -88,7 +90,26 @@ class PostDetailView(DetailView):
         return (post, comments)
 
 
+class PostCreate(AuthorCreateView):
+    model = Post
+    template_name = 'blog/post/form.html'
+    fields = ['title', 'slug', 'body', 'status', 'publish', 'tags']
+    success_url = reverse_lazy('blog:post_list')
+
+class PostUpdate(AuthorUpdateView):
+    model = Post
+    template_name = 'blog/post/form.html'
+    fields = ['title', 'slug', 'body', 'status', 'publish', 'tags']
+    success_url = reverse_lazy('blog:post_list')
+
+class PostDelete(AuthorDeleteView):
+    model = Post
+    template_name = 'blog/post/confirm_delete.html'
+    fields = ['title', 'slug', 'body', 'status', 'publish'], 'tags'
+    success_url = reverse_lazy('blog:post_list')
+
 ## FBV
+@login_required
 def post_share(request, post_id):
     post = get_object_or_404(Post, id=post_id, status='published')
     sent = False
@@ -105,6 +126,7 @@ def post_share(request, post_id):
     return render(request, 'blog/post/share.html', {'post': post, 'form': form,
                                                     'sent': sent})
 
+@login_required
 def post_search(request):
     form = SearchForm()
     query = None

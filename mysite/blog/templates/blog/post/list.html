@@ -3,29 +3,46 @@
 {% block title %}Ya Blog{% endblock %}
 
 {% block content %}
-<h1>YA Blog</h1>
 
 {% if tag %}
   <h2>Posts tagged with "{{ tag.name }}"</h2>
 {% endif %}
 
-{% for post in posts %}
-  <h2>
-    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-  </h2>
-    <p class="tags">Tags:
-      {% for tag in post.tags.all %}
-       <a href="{% url "blog:post_list_by_tag" tag.slug %}">{{ tag.name }}</a>
-       {% if not forloop.last %}
-       ,&nbsp;
-       {% endif %}
-       {% endfor %}
-    </p>
+  {% for post in posts %}
+  <div class="card border-dark mb-1" style="background-color:LightGray;">
+    <div class="header">
+      <h3>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+      </h3>
+    </div>
 
-  <p class="date">
-    Published {{ post.publish }} by {{ post.author }}
-  </p>
-  {{ post.body|markdown|truncatewords_html:50 }}
+    <div class="card-body text-dark">
+      <p>Tags:
+        {% for tag in post.tags.all %}
+          <span class="badge badge-warning"><a href="{% url "blog:post_list_by_tag" tag.slug %}">{{ tag.name }}</a></span>
+          {% if not forloop.last %}
+          ,&nbsp;
+          {% endif %}
+        {% endfor %}
+      </p>
+
+      <p class="date">
+        Published {{ post.publish }} by {{ post.author }}
+      </p>
+
+      {{ post.body|markdown|truncatewords_html:50 }}
+    </div>
+
+    {% if post.author == user %}
+    <div class="card-footer bg-transparent border-dark">
+      <span>
+        <a href="{% url 'blog:post_update' post.id %}" class="btn btn-info">Edit</a> &nbsp;
+        <a href="{% url 'blog:post_delete' post.id %}" class="btn btn-danger">Delete</a>
+      </span>
+    </div>
+    {% endif %}
+  </div>
+
 {% empty %}
   <div class="alert alert-info" role="alert">There are no blog entries.</div>
 {% endfor %}

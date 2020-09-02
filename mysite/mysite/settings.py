@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+APP_NAME = 'YABLOG'
 
 SITE_ID = 5
 
@@ -47,11 +48,14 @@ INSTALLED_APPS = [
 
     # search with PostgreSQL
     'django.contrib.postgres',
-    
+
     'blog.apps.BlogConfig',
     'crispy_forms',
     'taggit',
 ]
+
+# When we get to crispy forms :)
+CRISPY_TEMPLATE_PACK = 'bootstrap4' # Add
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
