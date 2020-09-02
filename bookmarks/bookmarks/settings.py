@@ -143,3 +143,12 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
+## Custom Additions - Non Production settings
+EMAIL_HOST = '' # 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pascal@bookmark.edu'      # fake
+EMAIL_HOST_PASSWORD = 'Blah blah bla...' # fake
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  ## Do NOT send any email
