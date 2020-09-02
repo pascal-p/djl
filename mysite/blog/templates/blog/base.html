@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   </head>
-  <body style="background-color:Gray;">
+  <body style="background-color:Gainsboro;">
     <div class="container-fluid">
       {% include "nav.html" %}
 
@@ -24,7 +24,7 @@
       </div>
 
       <div id="sidebar">
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
           <h2>Ya blog</h2>
           <p>This is my blog. I've written {% total_posts %} posts so far.</p>
 
@@ -44,7 +44,7 @@
             </li>
             {% endfor %}
           </ul>
-          {% endif %}
+        {% endif %}
       </div>
 
     </div>

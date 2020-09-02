@@ -35,6 +35,8 @@ APP_NAME = 'YABLOG'
 SITE_ID = 5
 
 INSTALLED_APPS = [
+    'blog.apps.BlogConfig',      # on top to sue authentication from this...
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +51,6 @@ INSTALLED_APPS = [
     # search with PostgreSQL
     'django.contrib.postgres',
 
-    'blog.apps.BlogConfig',
     'crispy_forms',
     'taggit',
 ]
@@ -148,7 +149,7 @@ STATIC_URL = '/static/'
 
 
 ## Custom Additions - Non Production settings
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = '' # 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'pascal@blog.org'      # fake
 EMAIL_HOST_PASSWORD = 'Blah blah bla...' # fake

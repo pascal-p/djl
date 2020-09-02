@@ -32,6 +32,7 @@
   {% else %}
    <h1>Search for posts</h1>
    <form method="get">
+     {% csrf_token %}
      {{ form|crispy }}
      <button type="submit" class="btn btn-primary" value="Search">Search</button>
    </form>
