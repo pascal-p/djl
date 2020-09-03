@@ -141,4 +141,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+Google_Auth/
 bookmarks/media/*
+bookmarks/cert.*

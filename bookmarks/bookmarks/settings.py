@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("DJANGO_PROJECT2_SECRET_KEY", "arr gh hhh!! no..")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['yabookmark.edu', 'localhost3', '127.0.0.3']
 
 
 # Application definition
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     ## Additions
     'crispy_forms',
+    'social_django',
+    'django_extensions',
 ]
 
 # When we get to crispy forms :)
@@ -142,6 +144,8 @@ STATIC_URL = '/static/'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
+
+    'social_core.backends.google.GoogleOAuth2',
 ]
 
 LOGIN_REDIRECT_URL = 'dashboard'
@@ -161,3 +165,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  ## Do NOT send
 ##
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Google API
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("GOOGLE_CLIENT_ID")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =  os.environ.get("GOOGLE_CLIENT_SECRET")
