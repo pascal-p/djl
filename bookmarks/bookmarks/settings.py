@@ -152,3 +152,7 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  ## Do NOT send any email
+
+##
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

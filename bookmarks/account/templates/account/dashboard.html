@@ -3,5 +3,13 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
   <h1>Dashboard</h1>
-  <p>Welcome to your dashboard.</p>
+  <p class="alert alert-info" role="alert">
+    Welcome to your dashboard.
+  </p>
+  <p>
+    <span>
+      <a class="btn btn-primary" href="{% url "edit" %}">edit your profile</a> &nbsp;
+      <a class="btn btn-primary" href="{% url "password_change" %}">change yourpassword</a>
+    </span>
+  </p>
 {% endblock %}

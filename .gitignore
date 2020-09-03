@@ -141,7 +141,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-lab3/video
-lab3/CartPole-v0.mp4
-lab3/Pong-v0.mp4
-lab3/RL_orig.ipynb
+bookmarks/media/*
