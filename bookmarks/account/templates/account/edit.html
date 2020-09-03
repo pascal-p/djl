@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit your account{% endblock %}
+
+{% block content %}
+  <h1>Edit your account</h1>
+  <p class="alert alert-info" role="alert">You can edit your account using the following form:</p>
+  <form method="post" enctype="multipart/form-data">
+    {{ user_form|crispy }}
+    {{ profile_form|crispy }}
+    {% csrf_token %}
+    <p>
+      <button type="submit" class="btn btn-primary" value="Save changes">Save changes</button>
+    </p>
+  </form>
+{% endblock %}
