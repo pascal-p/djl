@@ -21,6 +21,6 @@ def image_create(request):
             None
     else:
         form = ImageCreateForm(data=request.GET)  ## build form with data provided by the bookmarklet via GET
-        
-    return render(request, 'images/iamge/create.html',
+
+    return render(request, 'images/image/create.html',
                   {'section': 'images', 'form': form})
