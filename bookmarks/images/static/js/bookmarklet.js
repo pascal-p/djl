@@ -25,7 +25,7 @@
     });
 
     // find images and display them
-    jQuery.each(jQuery('img[src$="jpeg"]').add('img[src$="png"]'), function(index, image) {
+    jQuery.each(jQuery('img[src$="jpeg"]').add('img[src$="jpg"]').add('img[src$="png"]'), function(index, image) {
       if (jQuery(image).width() >= min_width && jQuery(image).height() >= min_height) {
         let image_url = jQuery(image).attr('src');
         jQuery('#bookmarklet .images').append('<a href="#"><img src="' + image_url + '" /></a>');
