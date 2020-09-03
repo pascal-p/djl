@@ -146,6 +146,10 @@ AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend',
 
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+
 ]
 
 LOGIN_REDIRECT_URL = 'dashboard'
@@ -169,3 +173,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Google API
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("GOOGLE_CLIENT_ID")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =  os.environ.get("GOOGLE_CLIENT_SECRET")
+
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get("GITHUB_CLIENT_ID")
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get("GITHUB_CLIENT_SECRET")
