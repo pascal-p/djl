@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'social_django',
     'django_extensions',
+    'easy_thumbnails',
 ]
 
 # When we get to crispy forms :)
