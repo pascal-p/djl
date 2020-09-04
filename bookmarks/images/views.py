@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .forms import ImageCreateForm
 from .models import Image
@@ -29,6 +30,29 @@ def image_create(request):
 
     return render(request, 'images/image/create.html',
                   {'section': 'images', 'form': form})
+
+@login_required
+def image_list(request):
+    imgs = Image.objects.all()
+    paginator = Paginator(imgs, 5)
+    page = request.GET.get('page')
+    try:
+        imgs = paginator.page(page)
+
+    except PageNotAnInteger:
+        imgs = paginator.page(1)
+
+    except EmptyPage:
+        if request.is_ajax():
+            ## If the request is AJAX and page is out of range => empty page
+            return HttpResponse('')
+        # If page is out of range deliver last page of results
+        imgs = paginator.page(paginator.num_pages)
+
+    if request.is_ajax():
+        return render(request, 'images/image/list_ajax.html', {'section': 'images', 'images': imgs})
+
+    return render(request, 'images/image/list.html', {'section': 'images', 'images': imgs})
 
 @ajax_required
 @login_required
