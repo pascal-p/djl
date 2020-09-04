@@ -34,6 +34,7 @@ APP_NAME = 'YABOOKMARK'
 
 INSTALLED_APPS = [
     'account.apps.AccountConfig',   ## put in 1st position
+    'images.apps.ImagesConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'social_django',
     'django_extensions',
+    'easy_thumbnails',
 ]
 
 # When we get to crispy forms :)

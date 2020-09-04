@@ -10,6 +10,7 @@ Django==3.1
 django-crispy-forms==1.9.2
 django-extensions==3.0.7
 django-taggit==1.2.0
+easy-thumbnails==2.7
 future==0.18.2
 googleapis-common-protos==1.52.0
 idna==2.10
