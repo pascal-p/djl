@@ -18,10 +18,7 @@ from .models import Article
 from .serializers import ArticleSerializer
 
 
-class ArticleViewSet(viewsets.GenericViewSet,
-                     mixins.ListModelMixin, mixins.CreateModelMixin,
-                     mixins.UpdateModelMixin, mixins.RetrieveModelMixin,
-                     mixins.DestroyModelMixin):
+class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
 
