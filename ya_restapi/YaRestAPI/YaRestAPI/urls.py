@@ -1,4 +1,4 @@
-"""bookmarks URL Configuration
+"""YaRestAPI URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -16,17 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from django.conf import settings
-from django.conf.urls.static import static
-
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('account/', include('account.urls')),
-    path('social-auth/', include('social_django.urls', namespace='social')),
-
-    path('images/', include('images.urls', namespace='images')),
+    ## Additions
+    path('', include('api_basic.urls'))
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
