@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     ## Addition
     'rest_framework',
+    'rest_framework.authtoken',
     'api_basic',         ## our app
 ]
 
