@@ -1,0 +1,41 @@
+version: '3.7'
+# Version of docker-compose (not python)
+
+# Main App
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'python main.py'
+    ports:
+      - 8001:5000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  queue:              ## Another python container: RMQ consumer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'python consumer.py'
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=ya_m
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - dbdata:/var/lib/postgresql
+    ports:
+      - 54321:5432               # External:Internal
+
+volumes:
+  dbdata:
+    external: true
