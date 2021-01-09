@@ -144,3 +144,6 @@ dmypy.json
 Google_Auth/
 bookmarks/media/*
 bookmarks/cert.*
+
+ya_micro-services/ya_rmq/rabbitmq/
+ya_micro-services/ya_rmq/rabbit_ya-rabbit_2021-1-9.json
