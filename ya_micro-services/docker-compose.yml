@@ -1,6 +1,8 @@
 version: '3.7'
 # Version of docker-compose (not python)
 
+# Root App (Product)
+
 services:
   backend:
     build:
@@ -14,19 +16,19 @@ services:
     depends_on:
       - db
 
-  # queue:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   command: 'python consumer.py'
-  #   depends_on:
-  #     - db
+  queue:          ## Another python container: RMQ consumer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'python consumer.py'
+    depends_on:
+      - db
 
   db:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=ya_admin # postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
