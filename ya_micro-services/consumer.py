@@ -7,7 +7,14 @@ django.setup()
 from ya_products.models import Product
 
 ## root (Django) project - consuming from 'admin_q' queue
-params = pika.URLParameters('amqp://corto:B@merSalEe@host.docker.internal.localhost:5672/')
+# params = pika.URLParameters('amqp://corto:B@merSalEe@host.docker.internal.localhost:5672/')
+rmq_host = os.environ['RMQ_HOST']
+credentials = pika.PlainCredentials('corto', 'B@merSalEe')
+params = pika.ConnectionParameters(rmq_host,  # 'host.docker.internal.localhost',
+                                   5672,
+                                   '/',
+                                   credentials)
+
 connection = pika.BlockingConnection(params)
 channel = connection.channel()
 
@@ -24,7 +31,8 @@ def callback(ch, method, properties, body):
     print(f' Product likes increased! => {product.likes}')
     return
 
-channel.basic_consume(queue='admin_q', on_message_callback=callback,
+channel.basic_consume(queue='admin_q',
+                      on_message_callback=callback,
                       auto_ack=True)
 print('Started Consuming / (root) Admin side...')
 channel.start_consuming()

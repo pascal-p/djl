@@ -1,9 +1,16 @@
-import pika, json
+import os, pika, json
 from main import Product, db
 
 ## main (Flask) app - consuming from 'main' queue
 
-params = pika.URLParameters('amqp://corto:B@merSalEe@host.docker.internal.localhost:5672/')
+# params = pika.URLParameters('amqp://corto:B@merSalEe@host.docker.internal.localhost:5672/')
+rmq_host = os.environ['RMQ_HOST']
+credentials = pika.PlainCredentials('corto', 'B@merSalEe')
+params = pika.ConnectionParameters(rmq_host, # 'host.docker.internal.localhost',
+                                   5672,
+                                   '/',
+                                   credentials)
+
 connection = pika.BlockingConnection(params)
 channel = connection.channel()
 

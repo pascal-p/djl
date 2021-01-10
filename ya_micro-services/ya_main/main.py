@@ -37,18 +37,14 @@ class ProductUser(db.Model):
     UniqueConstraint('user_id', 'product_id', name='user_product_unique')
 
 
-@app.route('/')
+@app.route('/api/products')
 def index():
-    return 'Hello'
+    return jsonify(Product.query.all())
 
 @app.route('/api/products/<int:id>/like', methods=['POST'])
 def like(id):
     # get the random id (for user) from ther Django App
-    req = requests.get('http://host.docker.internal.localhost:8000/api/user')
-    #
-    # Note: if we use localhost - we will hit the one inside the docker container
-    #       but we need to get outside the container: docker.for.mac.localhost
-    #
+    req = requests.get('http://172.17.0.1:8000/api/user')
     json = req.json()
 
     try:
