@@ -15,6 +15,8 @@ services:
       - .:/app
     depends_on:
       - db
+    environment:
+      - RMQ_HOST=${HOST_IP}
 
   queue:              ## Another python container: RMQ consumer
     build:
@@ -23,12 +25,16 @@ services:
     command: 'python consumer.py'
     depends_on:
       - db
+    environment:
+      - RMQ_HOST=${HOST_IP}
+    extra_hosts:  ## upon up - pass the IP of rmq container
+      - "outside:${HOST_IP}"
 
   db:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_DB=ya_m
+      - POSTGRES_DB=ya_main
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
