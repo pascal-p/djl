@@ -3,6 +3,10 @@ from pydantic import BaseModel
 from typing import Dict
 import requests
 
+## hypercorn
+import asyncio
+from hypercorn.config import Config
+from hypercorn.asyncio import serve
 
 app = FastAPI()
 
@@ -90,3 +94,7 @@ def check_id(city_id: int, db: Dict):
 def get_cur_time(city: str):
     r = requests.get(f'http://worldtimeapi.org/api/timezone/{city["timezone"]}')
     return r.json()['datetime']
+
+
+if __name__ == "__main__":
+    asyncio.run(serve(app, Config()))
