@@ -1,0 +1,19 @@
+<!-- books/templates/books/book_list.html -->
+<h1>All books</h1>
+
+{% for book in object_list %}
+<ul>
+  <li>Title: {{ book.title|capfirst }}</li>
+  <ul>
+    <li>Subtitle: {{ book.subtitle |truncatewords:"200" }}</li>
+    <li>Author: {{ book.author }}</li>
+    <li>ISBN: {{ book.isbn }}</li>
+  </ul>
+</ul>
+{% endfor %}
+
+<p>
+{% with total=object_list.count %}
+    As of now, {{ total }} book{{ total|pluralize }} in the library
+{% endwith %}
+</p>
