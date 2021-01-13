@@ -40,10 +40,11 @@ INSTALLED_APPS = [
 
     ## Additions
     'django.contrib.sites',
-    
+
     ## 3rd-party apps
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg', # 'rest_framework_swagger',
 
     'allauth',
     'allauth.account',
@@ -146,6 +147,8 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication'
         'rest_framework.authentication.TokenAuthentication',
     ],
+
+    # 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 # for user registration (django-allauth)
