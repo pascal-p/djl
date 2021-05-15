@@ -22,6 +22,8 @@ home
   {{merged_df | safe}}
   <br />
   {{gdf | safe}}
+  <br />
+  <img src="data:image/png;base64, {{chart | safe}}" />
 {% else %}
   <h4>No data </h4>
 {% endif %}

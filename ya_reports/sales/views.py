@@ -4,7 +4,7 @@ import pandas as pd
 
 from .models import Sale
 from .forms import SalesSearchForm
-from .utils import get_salesman_from_id, get_customer_from_id
+from .utils import get_salesman_from_id, get_customer_from_id, get_chart
 
 
 # Create your views here.
@@ -12,6 +12,7 @@ def home_view(request):
     ## function views
     form = SalesSearchForm(request.POST or None)
     sales_df, position_df, merged_df,df = None, None, None, None
+    chart = None
 
     if request.method == 'POST':
         date_from = request.POST.get('date_from')
@@ -37,9 +38,12 @@ def home_view(request):
             ]
             position_df = pd.DataFrame(position_data)
             merged_df = pd.merge(sales_df, position_df, on='sales_id')
-            gdf = merged_df.groupby('transaction_id', as_index=False)['price']
+            gdf = merged_df.groupby('transaction_id', as_index=False)['price'].agg('sum')
+            chart = get_chart(chart_type, gdf, labels=gdf['transaction_id'].values)
+
             sales_df = sales_df.to_html()
             position_df = position_df.to_html()
+            merged_df = merged_df.to_html()
             gdf = gdf.to_html()
         else:
             print("No data")
@@ -48,7 +52,9 @@ def home_view(request):
         'form': form,
         'sales_df': sales_df,
         'position_df': position_df,
-        'merged_df': gdf,
+        'merged_df': merged_df,
+        'gdf': gdf,
+        'chart': chart,
     }
     return render(request, 'sales/home.html', ctxt)
 
