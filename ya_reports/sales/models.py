@@ -1,10 +1,12 @@
 from django.db import models
 
 # Create your models here.
+from django.utils import timezone
+from django.shortcuts import reverse
+
 from products.models import Product
 from customers.models import Customer
 from profiles.models import Profile
-from django.utils import timezone
 from .utils import generate_code
 
 class Position(models.Model):
@@ -44,6 +46,9 @@ class Sale(models.Model):
             self.create_at = timezone.now()
         return super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('sales:detail', kwargs={'pk': self.pk})
+    
     def get_positions(self):
         return self.positions.all()
 
