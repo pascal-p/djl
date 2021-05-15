@@ -3,14 +3,17 @@ from django.views.generic import ListView, DetailView
 import pandas as pd
 
 from .models import Sale
+from reports.forms import ReportForm
 from .forms import SalesSearchForm
 from .utils import get_salesman_from_id, get_customer_from_id, get_chart
+
 
 
 # Create your views here.
 def home_view(request):
     ## function views
-    form = SalesSearchForm(request.POST or None)
+    search_form = SalesSearchForm(request.POST or None)
+    report_form = ReportForm()
     sales_df, position_df, merged_df, gdf = None, None, None, None
     chart = None
 
@@ -49,7 +52,8 @@ def home_view(request):
             print("No data")
 
     ctxt = {
-        'form': form,
+        'search_form': search_form,
+        'report_form': report_form,
         'sales_df': sales_df,
         'position_df': position_df,
         'merged_df': merged_df,
