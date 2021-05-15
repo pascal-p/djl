@@ -11,7 +11,7 @@ from .utils import get_salesman_from_id, get_customer_from_id
 def home_view(request):
     ## function views
     form = SalesSearchForm(request.POST or None)
-    sales_df, position_df = None, None
+    sales_df, position_df, merged_df,df = None, None, None, None
 
     if request.method == 'POST':
         date_from = request.POST.get('date_from')
@@ -23,19 +23,24 @@ def home_view(request):
             sales_df = pd.DataFrame(sales_qs.values())
             sales_df['salesman_id'] = sales_df['salesman_id'].apply(get_salesman_from_id)
             sales_df['customer_id'] = sales_df['customer_id'].apply(get_customer_from_id)
-            sales_df.rename({'customer_id': 'customer', 'salesman_id': 'salesman' }, axis=1, inplace=True)
+            sales_df.rename({'customer_id': 'customer', 'salesman_id': 'salesman',
+                             'id': 'sales_id'}, axis=1, inplace=True)
             sales_df['created_at'] = sales_df['created_at'].apply(lambda dt: dt.strftime("%d-%m-%Y"))
-            sales_df = sales_df.to_html()
             position_data = [
                 {
                     'position_id': pos.id,
                     'product': pos.product.name,
                     'quantity': pos.quantity,
                     'price': pos.price,
-                    'sale_id': pos.get_sales_id(),
+                    'sales_id': pos.get_sales_id(),
                 } for sale in sales_qs for pos in sale.get_positions()
             ]
-            position_df = pd.DataFrame(position_data).to_html()
+            position_df = pd.DataFrame(position_data)
+            merged_df = pd.merge(sales_df, position_df, on='sales_id')
+            gdf = merged_df.groupby('transaction_id', as_index=False)['price']
+            sales_df = sales_df.to_html()
+            position_df = position_df.to_html()
+            gdf = gdf.to_html()
         else:
             print("No data")
 
@@ -43,6 +48,7 @@ def home_view(request):
         'form': form,
         'sales_df': sales_df,
         'position_df': position_df,
+        'merged_df': gdf,
     }
     return render(request, 'sales/home.html', ctxt)
 
