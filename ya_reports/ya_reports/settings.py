@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'products',
     'profiles',
     'reports',
-    'sales'
+    'sales',
 
     # 3rd party
     'crispy_forms'
@@ -138,6 +138,6 @@ STATICFILES_DIRS = [
     BASE_DIR/'templates',
 ]
 
-MEDIA_URL = '/media'
+MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR/'media'
