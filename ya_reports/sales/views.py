@@ -1,13 +1,20 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+
 from .models import Sale
+from .forms import SalesSearchForm
 
 
 # Create your views here.
 def home_view(request):
+    form = SalesSearchForm(request.POST or None)
     ## function views
     hw = "hello world from the view"
-    return render(request, 'sales/home.html', {'h': hw})
+    ctxt = {
+        'hello': hw,
+        'form': form
+    }
+    return render(request, 'sales/home.html', ctxt)
 
 class SaleListView(ListView):
     model = Sale

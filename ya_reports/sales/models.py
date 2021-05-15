@@ -48,7 +48,7 @@ class Sale(models.Model):
 
     def get_absolute_url(self):
         return reverse('sales:detail', kwargs={'pk': self.pk})
-    
+
     def get_positions(self):
         return self.positions.all()
 
