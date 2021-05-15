@@ -11,7 +11,7 @@ from .utils import get_salesman_from_id, get_customer_from_id, get_chart
 def home_view(request):
     ## function views
     form = SalesSearchForm(request.POST or None)
-    sales_df, position_df, merged_df,df = None, None, None, None
+    sales_df, position_df, merged_df, gdf = None, None, None, None
     chart = None
 
     if request.method == 'POST':
