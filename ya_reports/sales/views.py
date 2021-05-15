@@ -16,6 +16,7 @@ def home_view(request):
     report_form = ReportForm()
     sales_df, position_df, merged_df, gdf = None, None, None, None
     chart = None
+    no_data = None
 
     if request.method == 'POST':
         date_from = request.POST.get('date_from')
@@ -50,7 +51,7 @@ def home_view(request):
             merged_df = merged_df.to_html()
             gdf = gdf.to_html()
         else:
-            print("No data")
+            no_data = 'No data is available in this date range'
 
     ctxt = {
         'search_form': search_form,
@@ -60,6 +61,7 @@ def home_view(request):
         'merged_df': merged_df,
         'gdf': gdf,
         'chart': chart,
+        'no_data': no_data,
     }
     return render(request, 'sales/home.html', ctxt)
 
