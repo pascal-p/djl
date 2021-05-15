@@ -26,7 +26,8 @@ def home_view(request):
                     'position_id': pos.id,
                     'product': pos.product.name,
                     'quantity': pos.quantity,
-                    'price': pos.price
+                    'price': pos.price,
+                    'sale_id': pos.get_sales_id(),
                 } for sale in sales_qs for pos in sale.get_positions()
             ]
             position_df = pd.DataFrame(position_data).to_html()

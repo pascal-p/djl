@@ -24,6 +24,10 @@ class Position(models.Model):
         self.price = self.product.price * self.quantity
         return super().save(*args, **kwargs)
 
+    def get_sales_id(self):
+        sale_obj = self.sale_set.first() # perform reverse relationship # Sale has a many-to-many rel. with Position
+        return sale_obj.id
+
     def __str__(self):
         return f"id: {self.id} - {self.created_at.strftime('%d-%m-%Y')} - quantity: {self.quantity}"
 
