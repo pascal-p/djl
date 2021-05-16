@@ -66,7 +66,9 @@ def csv_upload_view(request):
                                                                  created_at=date)
                         sale_obj.positions.add(position_obj)
                         sale_obj.save()
-    #
+                return JsonResponse({'ex': False})
+        else:
+            return JsonResponse({'ex': True})
     return HttpResponse()
 
 def create_report_view(request):
