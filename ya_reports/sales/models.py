@@ -28,6 +28,10 @@ class Position(models.Model):
         sale_obj = self.sale_set.first() # perform reverse relationship # Sale has a many-to-many rel. with Position
         return sale_obj.id
 
+    def get_sales_customer(self):
+        sale_obj = self.sale_set.first()
+        return sale_obj.customer.name
+
     def __str__(self):
         return f"id: {self.id} - {self.created_at.strftime('%d-%m-%Y')} - quantity: {self.quantity}"
 
