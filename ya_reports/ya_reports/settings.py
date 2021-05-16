@@ -138,9 +138,10 @@ APPEND_SLASH = False
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
+    # BASE_DIR/'templates',
     BASE_DIR/'static',
-    BASE_DIR/'templates',
     BASE_DIR/'sales/static',
+    BASE_DIR/'reports/static',
 ]
 
 MEDIA_URL = '/media/'

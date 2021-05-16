@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -20,6 +20,12 @@ class ReportListView(ListView):
 class ReportDetailView(DetailView):
     model = Report
     template_name = 'reports/detail.html'
+
+class UploadTemplateView(TemplateView):
+    template_name = 'reports/from_file.html'
+
+def csv_upload_view(request):
+    return HttpResponse()
 
 def create_report_view(request):
     if request.is_ajax():
