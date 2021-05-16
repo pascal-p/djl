@@ -2,14 +2,17 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 import pandas as pd
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Sale
 from reports.forms import ReportForm
 from .forms import SalesSearchForm
 from .utils import get_salesman_from_id, get_customer_from_id, get_chart
 
 
-
 # Create your views here.
+@login_required
 def home_view(request):
     ## function views
     search_form = SalesSearchForm(request.POST or None)
@@ -65,11 +68,11 @@ def home_view(request):
     }
     return render(request, 'sales/home.html', ctxt)
 
-class SaleListView(ListView):
+class SaleListView(LoginRequiredMixin, ListView):
     model = Sale
     template_name = 'sales/main.html'
     # context_object_name = 'qs' would replace object_list in the view main.html
 
-class SaleDetailView(DetailView):
+class SaleDetailView(LoginRequiredMixin, DetailView):
     model = Sale
     template_name = 'sales/detail.html'

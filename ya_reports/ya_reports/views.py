@@ -8,8 +8,8 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            username = form.cleaned.get('username')
-            passwd = form.cleaned.get('password')
+            username = form.cleaned_data.get('username')
+            passwd = form.cleaned_data.get('password')
             user = authenticate(username=username, password=passwd)
             if user is not None:
                 login(request, user)
